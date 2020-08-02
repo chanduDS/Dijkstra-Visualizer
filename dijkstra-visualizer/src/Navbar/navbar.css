@@ -1,0 +1,14 @@
+li {
+    
+    margin: 0;
+    padding: 0;
+    display: inline;
+  }
+  
+a {
+    display: inline;
+    padding: 25px;
+    background-color: #dddddd;
+    color: black;
+    font-size: 25px;
+  }
