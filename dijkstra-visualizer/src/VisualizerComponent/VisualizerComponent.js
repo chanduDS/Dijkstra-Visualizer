@@ -4,6 +4,8 @@ import './style.css';
 import Cell from '../Cell/Cell';
 import {dijkstra, getNodesInShortestPathOrder} from '../dijkstra_Algorithm';
 
+import Navbar from '../Navbar/Navbar';
+
 let StartCellRow = 10;
 let StartCellCol = 15;
 let FinishCellRow = 10;
@@ -18,11 +20,16 @@ class VisualizerComponent extends Component {
           mouseIsPressed: false,
           startPressed : false,
           finishPressed : false,
+          Visualizing : false,
+          speed : 'Fast',
+          time : 10,
+          clearWalls : false,
         };
       }
     
     
     componentDidMount = () => {
+        console.log("came bhere !!!")
         const grid = GridFormation();
         this.setState({grid});
       }
@@ -84,14 +91,14 @@ class VisualizerComponent extends Component {
           if (i === visitedNodesInOrder.length) {
             setTimeout(() => {
               this.animateShortestPath(nodesInShortestPathOrder);
-            }, 10 * i);
+            }, this.state.time * i);
             return;
           }
           setTimeout(() => {
             const node = visitedNodesInOrder[i];
             document.getElementById(`cell-${node.row}-${node.col}`).className =
               'cell cell-visited';
-          }, 10 * i);
+          }, this.state.time * i);
         }
       }
     
@@ -106,14 +113,53 @@ class VisualizerComponent extends Component {
       }
     
       visualizeDijkstra() {
+        if(this.state.Visualizing===false)
+        {
+          this.setState({
+            Visualizing : true,
+          })
+        }
+        else 
+        return;
         const {grid} = this.state;
         const startNode = grid[StartCellRow][StartCellCol];
         const finishNode = grid[FinishCellRow][FinishCellCol];
         const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
         const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
         this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+        
       }
 
+      changeSpeed()
+      {
+        if(this.props.speed==='Fast')
+         {this.setState(
+          {speed : 'Fast',
+            time : 10,}
+        )} 
+        else if(this.props.speed==='Average')
+        {this.setState(
+         {speed : 'Average',
+           time : 20,}
+       )} 
+       else
+        {this.setState(
+         {speed : 'Slow',
+           time : 30,}
+       )} 
+      }
+
+      handleClearWalls()
+      {
+        if(this.state.Visualizing)
+        return;
+        // Handling Clear Board when clear board is pressed 
+        this.setState({
+          clearWalls : !this.state.clearWalls
+        })
+        this.componentDidMount();
+
+      }
 
     render() {
 
@@ -121,10 +167,10 @@ class VisualizerComponent extends Component {
 
         return(
           <>
-          <button onClick={() => this.visualizeDijkstra()}>
-          Visualize Dijkstra's Algorithm
-        </button>
-
+          
+        <div>{this.props.speed===this.state.speed ? null : this.changeSpeed()}</div>  
+        <div>{this.props.Visualize ? this.visualizeDijkstra() : null}</div>
+        <div>{this.state.clearWalls === this.props.clearWalls ? this.handleClearWalls() : null}</div>
         <div className="grid">
           {grid.map((row, rowIdx) => {
             return (

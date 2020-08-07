@@ -1,14 +1,32 @@
-li {
-    
-    margin: 0;
-    padding: 0;
-    display: inline;
-  }
+.navbar {
+  background-color: black;
+  display: inline;
   
-a {
-    display: inline;
-    padding: 25px;
-    background-color: #dddddd;
-    color: black;
-    font-size: 25px;
-  }
+}
+.dijkstra-button{
+  margin-left: 170px;
+  align-content: center;
+}
+.dropdown{
+  margin-right: 100px;
+}
+.SpeedButton{
+  margin-right: -10px;
+}
+.title{
+
+  font-size: 25px;
+}
+.clear-board{
+  font-size: 10px;
+  margin-top: 17px;
+  margin-left: 70px;
+}
+.clear-walls{
+  font-size: 10px;
+  margin-top: 17px;
+  margin-left: 50px;
+}
+.dropdownMenu{
+  color: blue;
+}
